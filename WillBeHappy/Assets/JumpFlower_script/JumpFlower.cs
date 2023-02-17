@@ -6,8 +6,13 @@ public class JumpFlower : MonoBehaviour
 {
     [SerializeField] float MaxJumpingSpeed = 30f;
     // Start is called before the first frame update
+    void Start() 
+    {
+        Debug.Log("실행됨");    
+    }
     void OnCollisionEnter2D(Collision2D other)
     {   
+        Debug.Log("점프력"+other.gameObject.GetComponent<Rigidbody2D>().velocity.y);
         Rigidbody2D otherrigid = other.gameObject.GetComponent<Rigidbody2D>();
         if(other.gameObject.tag == "Player")
         {

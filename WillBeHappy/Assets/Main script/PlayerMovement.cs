@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         myrigidbody = GetComponent<Rigidbody2D>();
-        myboxcollider = this.transform.GetChild(0).GetComponent<BoxCollider2D>();
+        myboxcollider = GetComponent<BoxCollider2D>();
         
     }
 
@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnJump(InputValue value)
     {
+        Debug.Log("스페이스바 눌렀어요");
         if (!myboxcollider.IsTouchingLayers(LayerMask.GetMask("Ground")) && !myboxcollider.IsTouchingLayers(LayerMask.GetMask("Box")) && !myboxcollider.IsTouchingLayers(LayerMask.GetMask("Object"))) {return;}
 
         if(value.isPressed)

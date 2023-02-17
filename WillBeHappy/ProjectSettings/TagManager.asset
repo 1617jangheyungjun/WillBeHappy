@@ -10,6 +10,10 @@ TagManager:
   - Milk
   - Pickup Box
   - Player Box
+  - Leafy Nest
+  - Leafy Radius Of Action
+  - Error Nest
+  - Error Bot
   layers:
   - Default
   - TransparentFX
