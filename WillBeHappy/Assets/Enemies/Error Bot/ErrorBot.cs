@@ -17,6 +17,7 @@ public class ErrorBot : MonoBehaviour
 
     [SerializeField] int EnemiesMovementSpeed = 10;
 
+    [SerializeField] Transform target;
 
     Rigidbody2D rd;
     public int nextmove;
@@ -82,7 +83,8 @@ public class ErrorBot : MonoBehaviour
     }
     void ShootGun()
     {
-        Instantiate(bullet, Gun.position, transform.rotation);  
+        Vector2 dir = target.position - transform.position;
+        Instantiate(bullet, Gun.position, Quaternion.Euler(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90));  
         Invoke("ShootGun", 0.5f);    
     }
 

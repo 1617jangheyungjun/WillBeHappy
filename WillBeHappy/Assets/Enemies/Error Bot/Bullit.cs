@@ -5,23 +5,24 @@ using UnityEngine;
 public class Bullit : MonoBehaviour
 {
     Rigidbody2D rd;
-    Vector2 Pv;
-    Vector2 dir;
+    
+    int rotateSpeed = 10000;
+    public Transform target;
     [SerializeField] float BullitSpeed = 10f;
     int i = 1;
+    // dir = (target.pos - pos).normalize
     void Start()
     {
+        
         rd = GetComponent<Rigidbody2D>();
-        Pv = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>().position;
     }
 
     // Update is called once per frame
     void Update() 
     {   
-        dir = new Vector2(Pv.x - rd.position.x, Pv.y - rd.position.y);
-        if(i == 1)
+        if(i < 3)
         {
-            shoot();
+            Invoke("shoot", 0.01f);
             i += 1;
         }
         
@@ -30,8 +31,9 @@ public class Bullit : MonoBehaviour
 
     void shoot()
     {
-        rd.velocity = new Vector2 (dir.x * BullitSpeed, dir.y * BullitSpeed);
+        rd.AddRelativeForce(new Vector2(0, BullitSpeed), ForceMode2D.Impulse);
     }
+    
     void OnCollisionEnter2D(Collision2D other) 
     {
         Destroy(this.gameObject,0);   

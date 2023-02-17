@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7487808a3710ff246a16344b5a48fce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 8539430170923878107, guid: d589868a786a63e49b57d665ad99bdfd, type: 3}
+  target: {fileID: 8539430170923878102, guid: d589868a786a63e49b57d665ad99bdfd, type: 3}
   BullitSpeed: 5
 --- !u!50 &6889122429701626518
 Rigidbody2D:
@@ -113,7 +113,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.0001
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
