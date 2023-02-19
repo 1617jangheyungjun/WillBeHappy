@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using AllUnits;
 
-public class EnemiesMovement : MonoBehaviour
+public class EnemiesMovement : Unit
 {
     Rigidbody2D myrigidbody; 
     public float nextmove;
     BoxCollider2D myboxcollider;
     [SerializeField] float EnemiesMovementSpeed = 10f;
     [SerializeField] float EnemiesMovementJumpSpeed = 10f;
+    private float Recrash = 1.5f;
     RaycastHit2D rayHit;
     public string Follow = "Null";
     public string status = "Idle";
@@ -94,6 +96,26 @@ public class EnemiesMovement : MonoBehaviour
             Invoke("monsterLogic", Random.Range(1f, 1.5f));
         }
     }
+
+    
+
+    void OnCollisionEnter2D(Collision2D other) 
+    {
+        if(other.gameObject.tag == "Player")
+        {
+            Follow = "Null";
+            CancelInvoke();
+            nextmove = -Mathf.Sign(GameObject.FindWithTag("Player").GetComponent<Rigidbody2D>().position.x - myrigidbody.position.x) * EnemiesMovementSpeed;
+            Invoke("monsterLogic", Random.Range(1f, 1.5f));
+        }    
+    }
+
+    void ReCrash()
+    {
+        Follow = "Do";
+        monsterLogic();
+    }
+
     void OnTriggerEnter2D(Collider2D other) 
     {
         Debug.Log(other);
@@ -124,9 +146,11 @@ public class EnemiesMovement : MonoBehaviour
         {
             if (status == "Idle")
             {
+                Recrash = 1.5f;
                 nextmove = Mathf.Sign(GameObject.FindWithTag("Player").GetComponent<Rigidbody2D>().position.x - myrigidbody.position.x) * EnemiesMovementSpeed * 2;
             }
         }
+
         
     }
 }

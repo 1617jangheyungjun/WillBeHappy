@@ -8,6 +8,8 @@ public class ErrorBot : MonoBehaviour
     public string status = "Idle";
     public string InNest = "In";
 
+    [SerializeField][Range(0.1f, 1f)] float ReloadTime = 0.5f;
+
     [SerializeField] GameObject bullet;
 
     [SerializeField] Transform Gun;
@@ -29,74 +31,74 @@ public class ErrorBot : MonoBehaviour
         rd.velocity = new Vector2(0, 0);
     }
 
-
+    void OnTriggerEnter2D(Collider2D other) 
+    {
+        if(other.tag == "UpNest")
+        {
+            status = "Warn";
+        }    
+    }
     void FixedUpdate()
     {
-        swing();
+        flip();
         if (Follow == "Null")
         {
             if (status == "Idle")
             {
-                Invoke("errorThink", Random.Range(1f, 1.5f));
+                errorThink();
+                CancelInvoke();
             }
+        }
+
+        if (Follow == "Do")
+        {
+            if (status == "Idle")
+            {
+                swing();
+                errorThink();
+            }
+
+            else if (status == "Warn")
+            {
+                swing();
+                errorThink();
+                CancelInvoke();
+                Invoke("ShootGun", ReloadTime);
+                status = "Idle";
+            }
+        }
+
+        if (this.transform.parent.transform.GetChild(0).GetComponent<Rigidbody2D>().position - rd.position == new Vector2(0, 0))
+        {
+            Follow = "Shoot";
         }
     }
 
-    void OnTriggerExit2D(Collider2D other) 
+    void flip()
     {
-        if(other.tag == "Player" & Follow == "Do")
-        {
-            Debug.Log("전투모드 해제");
-            Follow = "Null";
-            errorThink();
-        }
-        if(other.tag == "Error Nest")
-        {
-            nextmove *= -1;
-            CancelInvoke();
-            Invoke("errorThink", Random.Range(1f, 1.5f));
-        }    
+        transform.localScale = new Vector2(Mathf.Sign(target.position.x - transform.position.x) ,1f);
     }
-    void OnTriggerEnter2D(Collider2D other) 
-    {
-        if(other.tag == "Player" & Follow == "Null")
-        {
-            Follow = "Do";
-            nextmove = 0;
-            CancelInvoke();
-            Invoke("ShootGun", 0.5f);
-            Debug.Log("전투모드");  
-        }
-            
-    }
-    void OnTriggerStay2D(Collider2D other)
-    {
-        if(other.tag == "Player" & Follow == "Null")
-        {
-            Follow = "Do";
-            nextmove = 0;
-            CancelInvoke();
-            Invoke("ShootGun", 0.5f);
-            Debug.Log("전투모드");  
-        }
-            
-    }
+    
     void ShootGun()
     {
         Vector2 dir = target.position - transform.position;
         Instantiate(bullet, Gun.position, Quaternion.Euler(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90));  
-        Invoke("ShootGun", 0.5f);    
+        Invoke("ShootGun", ReloadTime);    
     }
 
     void errorThink()
     {
-        Debug.Log("에러봇이 생각을 시작함");
         if(Follow == "Null")
         {
-            nextmove = Random.Range(-1,2) * EnemiesMovementSpeed;
+            Debug.Log("에러봇이 생각을 시작함");
+            rd.velocity = (this.transform.parent.GetComponent<Rigidbody2D>().position - rd.position) * 2;
+            Debug.Log(gameObject.GetComponentInParent<Rigidbody2D>().position);
         }
-        CancelInvoke();
-        Invoke("errorThink", Random.Range(1f, 1.5f));
+
+        else if(Follow == "Do")
+        {
+            rd.velocity = (this.transform.parent.transform.GetChild(0).GetComponent<Rigidbody2D>().position - rd.position) * 2;
+        }
     }
     void swing()
     {

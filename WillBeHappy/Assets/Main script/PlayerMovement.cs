@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using AllUnits;
+[RequireComponent(typeof(Rigidbody2D))]
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : Unit
 {
     [SerializeField] float RunSpeed = 10f;
     [SerializeField] float JumpSpeed = 10f;
@@ -11,17 +13,14 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D myrigidbody;
     GameObject Jump;
     BoxCollider2D myboxcollider;
-    void Start()
+    public bool isDead { get; private set; } = false;
+    void Awake()
     {
         myrigidbody = GetComponent<Rigidbody2D>();
         myboxcollider = GetComponent<BoxCollider2D>();
         
     }
 
-    void Update() 
-    {
-        
-    }
     // Update is called once per frame
     void FixedUpdate() 
     {
@@ -53,5 +52,26 @@ public class PlayerMovement : MonoBehaviour
         myrigidbody.velocity = playerVelocity;
         Debug.Log(moveInput.x * RunSpeed);
         Debug.Log("velocity = " + myrigidbody.velocity);
+    }
+
+    void OnCollisionEnter2D(Collision2D other) 
+    {
+        if((other.gameObject.tag == "Leafy") & !isDamage)
+        {
+            isDamage = true;
+            float enemyAttack = other.gameObject.GetComponent<EnemiesMovement>().damage;
+            currentHealth -= enemyAttack;
+        }
+        if(other.gameObject.tag == "Enemy Bullet" & !isDamage)
+        {
+            isDamage = true;
+            float enemyAttack = other.gameObject.GetComponent<Bullit>().damage;
+            currentHealth -= enemyAttack;
+        }
+        if (currentHealth <= 0)
+            {
+                isDead = true;
+                gameObject.SetActive(false);
+            }    
     }
 }

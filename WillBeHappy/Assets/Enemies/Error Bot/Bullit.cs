@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using AllUnits;
 
-public class Bullit : MonoBehaviour
+public class Bullit : Unit
 {
     Rigidbody2D rd;
     
@@ -11,14 +12,14 @@ public class Bullit : MonoBehaviour
     [SerializeField] float BullitSpeed = 10f;
     int i = 1;
     // dir = (target.pos - pos).normalize
-    void Start()
+    void Awake()
     {
         
         rd = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
-    void Update() 
+    void FixedUpdate() 
     {   
         if(i < 3)
         {

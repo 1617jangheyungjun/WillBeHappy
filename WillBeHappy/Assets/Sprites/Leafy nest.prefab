@@ -185,6 +185,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Leafy
       objectReference: {fileID: 0}
+    - target: {fileID: 1938192418021040487, guid: d20b6c68498d51f4fb85a151b21f096f, type: 3}
+      propertyPath: m_TagString
+      value: Leafy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d20b6c68498d51f4fb85a151b21f096f, type: 3}
 --- !u!4 &1938192418162845698 stripped

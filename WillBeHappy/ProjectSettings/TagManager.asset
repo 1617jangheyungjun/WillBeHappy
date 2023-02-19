@@ -14,6 +14,9 @@ TagManager:
   - Leafy Radius Of Action
   - Error Nest
   - Error Bot
+  - Leafy
+  - Enemy Bullet
+  - UpNest
   layers:
   - Default
   - TransparentFX
@@ -27,7 +30,7 @@ TagManager:
   - Object
   - Item
   - Box
-  - 
+  - Bullet
   - 
   - 
   - 
