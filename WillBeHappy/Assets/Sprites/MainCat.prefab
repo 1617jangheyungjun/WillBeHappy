@@ -87,9 +87,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  maxHealth: 50
+  maxHealth: 168.5
   currentHealth: 0
-  damageDelay: 2
+  damageDelay: 0.5
   damage: 5
   isDamage: 0
   RunSpeed: 10

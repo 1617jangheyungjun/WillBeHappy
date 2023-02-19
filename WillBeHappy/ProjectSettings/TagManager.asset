@@ -69,6 +69,9 @@ TagManager:
   - name: Ground
     uniqueID: 4000000937
     locked: 0
+  - name: Grass
+    uniqueID: 2274113247
+    locked: 0
   - name: Enemies
     uniqueID: 3645293127
     locked: 0
