@@ -23,7 +23,7 @@ public class PlayerMovement : Unit
     BoxCollider2D myboxcollider;
     SpriteRenderer SR;
     int other_range;
-    int doubleJump = 1;
+    public int doubleJump = 1;
     public bool isDead { get; private set; } = false;
     void Awake()
     {
@@ -37,6 +37,10 @@ public class PlayerMovement : Unit
     {
         Run();
         HitMove();
+        if (myboxcollider.IsTouchingLayers(LayerMask.GetMask("Ground")) | myboxcollider.IsTouchingLayers(LayerMask.GetMask("Box")) | myboxcollider.IsTouchingLayers(LayerMask.GetMask("Object"))) 
+        {
+            doubleJump = 1;
+        }
     }
     
 
@@ -52,18 +56,24 @@ public class PlayerMovement : Unit
         Debug.Log("스페이스바 눌렀어요");
         if (!myboxcollider.IsTouchingLayers(LayerMask.GetMask("Ground")) && !myboxcollider.IsTouchingLayers(LayerMask.GetMask("Box")) && !myboxcollider.IsTouchingLayers(LayerMask.GetMask("Object"))) 
         {
-            if(doubleJump == 2)
+
+            if(doubleJump <= 2)
             {
-                myrigidbody.velocity = new Vector2 (myrigidbody.velocity.x,BoubleJumpSpeed);
+                doubleJump = 2;
             }
 
+
+            if(doubleJump == 2)
+            {
+                myrigidbody.velocity = new Vector2 (myrigidbody.velocity.x, BoubleJumpSpeed);
+            }
+
+
             else{return;}
+            
+
         }
 
-        if (myboxcollider.IsTouchingLayers(LayerMask.GetMask("Ground")) | myboxcollider.IsTouchingLayers(LayerMask.GetMask("Box")) | myboxcollider.IsTouchingLayers(LayerMask.GetMask("Object"))) 
-        {
-            doubleJump = 1;
-        }
         
         if(value.isPressed)
         {
@@ -103,7 +113,7 @@ public class PlayerMovement : Unit
         if (currentHealth <= 0)
             {
                 isDead = true;
-                gameObject.SetActive(false);
+                
             }    
     }
 

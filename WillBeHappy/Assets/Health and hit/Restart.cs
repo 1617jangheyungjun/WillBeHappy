@@ -23,6 +23,7 @@ public class Restart : MonoBehaviour
     {
         if (playerScript.isDead)
         {
+            Debug.Log("플레이어 사망" + waitToLoad);
             waitToLoad -= Time.deltaTime;
             if(waitToLoad <= 0)
             {

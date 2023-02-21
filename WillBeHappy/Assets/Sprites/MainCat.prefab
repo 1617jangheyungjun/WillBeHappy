@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8539430170923878101}
   - component: {fileID: 8539430170923878097}
   - component: {fileID: 4845062689890608140}
+  - component: {fileID: 4927636735923284710}
   - component: {fileID: 8539430170923878104}
   - component: {fileID: 8539430170923878098}
   - component: {fileID: 8539430170923878100}
@@ -92,8 +93,12 @@ MonoBehaviour:
   damageDelay: 0.5
   damage: 5
   isDamage: 0
+  applyCameraShake: 0
   RunSpeed: 10
   JumpSpeed: 26
+  BoubleJumpSpeed: 10
+  Shiver: 10
+  Shake: 0
 --- !u!114 &8539430170923878097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,6 +127,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Status: None Box
   prefab: {fileID: 5559202734122926400, guid: cf9c0e585fc7eed449be78f46c6d1ea2, type: 3}
+--- !u!114 &4927636735923284710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8539430170923878107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b63ce73dbdb5b554a8b5792bd68d6a81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waitToLoad: 2
 --- !u!212 &8539430170923878104
 SpriteRenderer:
   m_ObjectHideFlags: 0
