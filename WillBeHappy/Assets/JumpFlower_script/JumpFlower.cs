@@ -5,6 +5,8 @@ using UnityEngine;
 public class JumpFlower : MonoBehaviour
 {
     [SerializeField] float MaxJumpingSpeed = 30f;
+
+    [SerializeField] float  SmallestSpeed = 30f;
     // Start is called before the first frame update
     void Start() 
     {
@@ -19,6 +21,11 @@ public class JumpFlower : MonoBehaviour
             if(otherrigid.velocity.y > MaxJumpingSpeed)
             {
                 otherrigid.velocity = new Vector2 (0, MaxJumpingSpeed);
+            }
+
+            if(otherrigid.velocity.y < SmallestSpeed)
+            {
+                otherrigid.velocity = new Vector2 (0, SmallestSpeed);
             }
         }
     }    

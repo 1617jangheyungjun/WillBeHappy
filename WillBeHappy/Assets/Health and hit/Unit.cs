@@ -10,11 +10,15 @@ namespace AllUnits
         [SerializeField] internal float currentHealth;
         [SerializeField] internal float damageDelay = 2f;
         [SerializeField] internal float damage = 5f;
-        private float initialDamageDelay;
+        internal float initialDamageDelay;
         [SerializeField] protected bool isDamage = false;
+
+        [SerializeField]internal bool applyCameraShake;
+        internal CameraShake cameraShake;
 
         virtual protected void Start()
         {
+            cameraShake = Camera.main.GetComponent<CameraShake>();
             currentHealth = maxHealth;
             initialDamageDelay = damageDelay;
         }

@@ -31,11 +31,10 @@ public class EnemiesMovement : Unit
     {
         myrigidbody.velocity = new Vector2(nextmove, myrigidbody.velocity.y);
         Vector2 frontVec = new Vector2(myrigidbody.position.x + Mathf.Sign(nextmove), myrigidbody.position.y);
-        Vector2 frontVec2 = new Vector2(myrigidbody.position.x + Mathf.Sign(nextmove), myrigidbody.position.y);
         Debug.DrawRay(frontVec, Vector3.down, new Color(0, 1, 0));
-        Debug.DrawRay(frontVec, new Vector2(0, 0.5f), new Color(1, 1, 1) );
         //떨어지지 않게
         rayHit = Physics2D.Raycast(frontVec, Vector3.down, 1, LayerMask.GetMask("Ground"));
+
         if (myboxcollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
         {
             status = "Idle";
