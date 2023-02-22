@@ -88,9 +88,9 @@ public class ErrorBot : MonoBehaviour
 
     void errorThink()
     {
+        Debug.Log("에러봇이 생각을 시작함");
         if(Follow == "Null")
         {
-            Debug.Log("에러봇이 생각을 시작함");
             rd.velocity = (this.transform.parent.GetComponent<Rigidbody2D>().position - rd.position) * 2;
             Debug.Log(gameObject.GetComponentInParent<Rigidbody2D>().position);
         }

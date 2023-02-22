@@ -5,7 +5,6 @@ namespace AllUnits
 {
     public class Unit : MonoBehaviour
     {
-        [SerializeField] protected float speed = 3f;
         [SerializeField] internal float maxHealth = 50f;
         [SerializeField] internal float currentHealth;
         [SerializeField] internal float damageDelay = 2f;
@@ -13,7 +12,6 @@ namespace AllUnits
         internal float initialDamageDelay;
         [SerializeField] protected bool isDamage = false;
 
-        [SerializeField]internal bool applyCameraShake;
 
         virtual protected void Start()
         {

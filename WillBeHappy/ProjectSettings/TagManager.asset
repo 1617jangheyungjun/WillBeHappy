@@ -17,6 +17,8 @@ TagManager:
   - Leafy
   - Enemy Bullet
   - UpNest
+  - Forest Bug Nest
+  - Froest Bug Radius Of Action
   layers:
   - Default
   - TransparentFX
