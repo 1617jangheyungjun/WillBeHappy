@@ -9,13 +9,13 @@ public class JumpFlower : MonoBehaviour
     [SerializeField] float  SmallestSpeed = 30f;
     BoxCollider2D myboxcollider;
 
+    public GameObject material;
     float InitialBounce = 1.2f;
 
     float jumpDelay = 5f;
     float InitialJumpDelay;
 
     bool dojump = false;
-    float SmallestSpeed2;
     // Start is called before the first frame update
     void Start() 
     {
@@ -32,14 +32,12 @@ public class JumpFlower : MonoBehaviour
             Debug.Log(jumpDelay);
             if(jumpDelay < 0)
             {
+                GameObject temp = Instantiate(material, this.transform.position, Quaternion.identity);
+                temp.transform.parent = this.transform;
                 jumpDelay = InitialJumpDelay;
                 dojump = false;
             }
         }    
-    }
-    void OnTriggerEnter2D(Collider2D other) 
-    {
-        SmallestSpeed2 = other.GetComponent<Rigidbody2D>().velocity.y;
     }
     void OnCollisionEnter2D(Collision2D other)
     {   
@@ -49,21 +47,17 @@ public class JumpFlower : MonoBehaviour
         if(other.gameObject.tag == "Player" & !dojump)
         {
             dojump = true;
-            if(SmallestSpeed2 > MaxJumpingSpeed)
+            if(otherrigid.velocity.y > MaxJumpingSpeed)
             {
                 otherrigid.velocity = new Vector2 (0, MaxJumpingSpeed);
             }
 
-            else if(SmallestSpeed2 < SmallestSpeed)
+            else if(otherrigid.velocity.y < SmallestSpeed)
             {
                 otherrigid.velocity = new Vector2 (0, SmallestSpeed);
             }
-
-            else
-            {   
-                otherrigid.velocity = new Vector2 (0, -SmallestSpeed2 * 1.2f);
-            }
-            Debug.Log(SmallestSpeed2 + "꿝");
+            Debug.Log(transform.GetChild(0));
+            Destroy(transform.GetChild(0).gameObject, 0);
         }
         
     }    
