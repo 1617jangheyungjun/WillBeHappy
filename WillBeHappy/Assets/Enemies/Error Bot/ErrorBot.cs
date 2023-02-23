@@ -17,7 +17,6 @@ public class ErrorBot : MonoBehaviour
     [SerializeField][Range(0f, 10f)] float speed = 1f;
     [SerializeField][Range(0f, 10f)] float length = 1f;
 
-    [SerializeField] int EnemiesMovementSpeed = 10;
 
     [SerializeField] Transform target;
 
@@ -92,7 +91,7 @@ public class ErrorBot : MonoBehaviour
         if(Follow == "Null")
         {
             rd.velocity = (this.transform.parent.GetComponent<Rigidbody2D>().position - rd.position) * 2;
-            Debug.Log(gameObject.GetComponentInParent<Rigidbody2D>().position);
+            Debug.Log("에러봇 위치" + (this.transform.parent.GetComponent<Rigidbody2D>().position - rd.position));
         }
 
         else if(Follow == "Do")

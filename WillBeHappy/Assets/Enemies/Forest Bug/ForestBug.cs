@@ -10,15 +10,24 @@ public class ForestBug : Unit
     public float nextmove;
     BoxCollider2D myboxcollider;
     [SerializeField] float EnemiesMovementSpeed = 10f;
+    [SerializeField] [Range(1, 50)] float Re_Needle_Shoot = 10f;
     RaycastHit2D rayHit;
     public string Follow = "Null";
     public string status = "Idle";
     public string InNest = "In";
+    bool dead = true;
     float whatmove;
+    float initialReload;
+    bool reload;
+    float re_NeedleSoot;
     public bool isDead { get; private set; } = false;
     // Start is called before the first frame update
     void Awake() 
     {
+        re_NeedleSoot = Re_Needle_Shoot;
+        reload = false;
+        initialReload = Re_Needle_Shoot;
+        Needle_Shoot();
         myrigidbody = GetComponent<Rigidbody2D>();  
         monsterLogic();  
         Follow = "Null";
@@ -26,9 +35,38 @@ public class ForestBug : Unit
         nextmove = 1 * EnemiesMovementSpeed;
     }
 
+    void Needle_Shoot()
+    {
+        for(int rocate = -90; rocate < 91; rocate += 180 / 8)
+        {
+            Debug.Log("숲벌레 죽음");
+            Instantiate(bullet, this.gameObject.transform.position, Quaternion.Euler(0, 0, rocate));
+        }
+        reload = true;
+
+    }
 
     void FixedUpdate()
     {
+        if(reload)
+        {
+            Re_Needle_Shoot -= Time.deltaTime;
+            if(Re_Needle_Shoot < 0)
+            {
+                reload = false;
+                Re_Needle_Shoot = initialReload;
+                Needle_Shoot();
+            }
+        }
+        if(isDead & dead)
+        {
+            deadevent();
+        }
+        
+        if(currentHealth <= 0)
+        {
+            isDead = true;
+        }
         myrigidbody.velocity = new Vector2(nextmove, myrigidbody.velocity.y);
         Vector2 frontVec = new Vector2(myrigidbody.position.x + Mathf.Sign(nextmove), myrigidbody.position.y);
         Debug.DrawRay(frontVec, Vector3.down, new Color(0, 1, 0));
@@ -61,11 +99,18 @@ public class ForestBug : Unit
             
             status = "Idle";
         }
+    }
 
-        if (isDead)
+    void deadevent()
+    {
+        dead = false;
+        int first = 180;
+        for(int rocate = -90; rocate < 181; rocate += 180 / 8)
         {
-            Destroy(this.gameObject, 0);
+            Debug.Log("숲벌레 죽음");
+            Instantiate(bullet, this.gameObject.transform.position, Quaternion.Euler(0, 0, rocate));
         }
+        Destroy(this.gameObject, 0.5f);
     }
 
     void OnTriggerExit2D(Collider2D other) 
@@ -79,6 +124,7 @@ public class ForestBug : Unit
         else if(other.tag == "Forest Bug Nest")
         {
             Follow = "Null";
+            InNest = "Out";
             nextmove = Mathf.Sign(transform.parent.position.x - myrigidbody.position.x) * EnemiesMovementSpeed;
             CancelInvoke();
             Invoke("monsterLogic", Random.Range(1f, 1.5f));
@@ -115,10 +161,6 @@ public class ForestBug : Unit
             nextmove = -Mathf.Sign(GameObject.FindWithTag("Player").GetComponent<Rigidbody2D>().position.x - myrigidbody.position.x) * EnemiesMovementSpeed;
             Invoke("monsterLogic", Random.Range(1f, 1.5f));
         }    
-        if (currentHealth <= 0)
-            {
-                isDead = true;
-            }    
     }
 
     void ReCrash()

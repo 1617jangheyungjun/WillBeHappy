@@ -10,11 +10,11 @@ public class EnemiesMovement : Unit
     BoxCollider2D myboxcollider;
     [SerializeField] float EnemiesMovementSpeed = 10f;
     [SerializeField] float EnemiesMovementJumpSpeed = 10f;
-    private float Recrash = 1.5f;
     RaycastHit2D rayHit;
     public string Follow = "Null";
     public string status = "Idle";
     public string InNest = "In";
+    public bool isDead { get; private set; } = false;
     float whatmove;
     // Start is called before the first frame update
     void Awake() 
@@ -29,6 +29,14 @@ public class EnemiesMovement : Unit
 
     void FixedUpdate()
     {
+        if(isDead)
+        {
+            Destroy(this.gameObject, 0);
+        }
+        if(currentHealth < 0)
+        {
+            isDead = true;
+        }
         myrigidbody.velocity = new Vector2(nextmove, myrigidbody.velocity.y);
         Vector2 frontVec = new Vector2(myrigidbody.position.x + Mathf.Sign(nextmove), myrigidbody.position.y);
         Debug.DrawRay(frontVec, Vector3.down, new Color(0, 1, 0));
@@ -109,11 +117,6 @@ public class EnemiesMovement : Unit
         }    
     }
 
-    void ReCrash()
-    {
-        Follow = "Do";
-        monsterLogic();
-    }
 
     void OnTriggerEnter2D(Collider2D other) 
     {
@@ -145,10 +148,11 @@ public class EnemiesMovement : Unit
         {
             if (status == "Idle")
             {
-                Recrash = 1.5f;
                 nextmove = Mathf.Sign(GameObject.FindWithTag("Player").GetComponent<Rigidbody2D>().position.x - myrigidbody.position.x) * EnemiesMovementSpeed * 2;
             }
         }
+
+
 
         
     }

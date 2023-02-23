@@ -6,8 +6,6 @@ using AllUnits;
 public class Bullit : Unit
 {
     Rigidbody2D rd;
-    
-    int rotateSpeed = 10000;
     [SerializeField] float BullitSpeed = 10f;
     int i = 1;
     // dir = (target.pos - pos).normalize
