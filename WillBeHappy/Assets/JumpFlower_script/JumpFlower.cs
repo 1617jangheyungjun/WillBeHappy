@@ -25,6 +25,7 @@ public class JumpFlower : MonoBehaviour
 
     void Update() 
     {
+        //여기 전체
         Debug.Log(InitialBounce);
         if(dojump)
         {
@@ -46,7 +47,7 @@ public class JumpFlower : MonoBehaviour
         
         if(other.gameObject.tag == "Player" & !dojump)
         {
-            dojump = true;
+            dojump = true; // 여기
             if(otherrigid.velocity.y > MaxJumpingSpeed)
             {
                 otherrigid.velocity = new Vector2 (0, MaxJumpingSpeed);
@@ -57,7 +58,7 @@ public class JumpFlower : MonoBehaviour
                 otherrigid.velocity = new Vector2 (0, SmallestSpeed);
             }
             Debug.Log(transform.GetChild(0));
-            Destroy(transform.GetChild(0).gameObject, 0);
+            Destroy(transform.GetChild(0).gameObject, 0); //여기
         }
         
     }    

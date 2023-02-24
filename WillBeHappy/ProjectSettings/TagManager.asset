@@ -59,6 +59,12 @@ TagManager:
   - name: BackGround
     uniqueID: 2744919217
     locked: 0
+  - name: Flatback
+    uniqueID: 2094196977
+    locked: 0
+  - name: Flatback front
+    uniqueID: 1495632175
+    locked: 0
   - name: Object
     uniqueID: 3878833143
     locked: 0
