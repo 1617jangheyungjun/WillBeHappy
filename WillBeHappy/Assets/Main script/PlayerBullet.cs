@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using AllUnits;
 
-public class Bullit : Unit
+public class PlayerBullet : Unit
 {
     [SerializeField] float bullit_destroy = 10f;
     Rigidbody2D rd;
@@ -40,19 +40,9 @@ public class Bullit : Unit
     {
         rd.AddRelativeForce(new Vector2(0, BullitSpeed), ForceMode2D.Impulse);
     }
-    
+
     void OnCollisionEnter2D(Collision2D other) 
     {
-        if(other.gameObject.tag != "Player Bullet")
-        {
-            Destroy(this.gameObject); 
-        }
-
-        if(other.gameObject.tag == "Player Bullet")
-        {
-            float otherdamage = damage;
-            currentHealth -= otherdamage;
-        }
-        
+        Destroy(this.gameObject);    
     }
 }

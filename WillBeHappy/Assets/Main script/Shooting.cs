@@ -9,6 +9,7 @@ public class Shooting : MonoBehaviour
     [SerializeField] int number_of_bullets = 6;
     [SerializeField] [Range(1, 5)] float ReloadTime = 1.5f;
     [SerializeField] [Range(0.2f, 5f)] float Shoot_Delay = 0.3f;
+    PlayerMovement MainScript;
     public bool isShoot = true;
     private float initial_Shoot_Delay;
     private float initial_ReloadTime;
@@ -23,28 +24,37 @@ public class Shooting : MonoBehaviour
         initial_NOB = number_of_bullets;
         initial_Shoot_Delay = Shoot_Delay;
         initial_ReloadTime = ReloadTime;
+        PlayerScript = GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
         ReloadTime -= Time.deltaTime;
-        mouse_position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        target = rd.position;
-        angle = Mathf.Atan2(mouse_position.y - target.y, mouse_position.x - target.x) * Mathf.Rad2Deg;
-        shoot();
-    }
-
-    void shoot()
-    {
         if(ReloadTime < 0)
         {
             number_of_bullets = initial_NOB;
         }
+
+
+        mouse_position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        target = rd.position;
+        angle = Mathf.Atan2(mouse_position.y - target.y, mouse_position.x - target.x) * Mathf.Rad2Deg;
+
+        
+        if(!PlayerScript.iscat)
+        {
+            shoot();
+        }
+        
+    }
+
+    void shoot()
+    {
         if(!isShoot)
         {
             Shoot_Delay -= Time.deltaTime;
-            if(Shoot_Delay < 0 & number_of_bullets > 0)
+            if(Shoot_Delay < 0 & number_of_bullets > -1)
             {
                 Shoot_Delay = initial_Shoot_Delay;
                 isShoot = true;
@@ -64,11 +74,11 @@ public class Shooting : MonoBehaviour
         if(value.isPressed & isShoot)
         {
             Debug.Log(Shoot_Delay);
-            if(number_of_bullets > 0)
+            if(number_of_bullets > -1)
             {
                 number_of_bullets -= 1;
                 ReloadTime = initial_ReloadTime;
-                if(number_of_bullets > 0 & isShoot)
+                if(number_of_bullets > -1 & isShoot & !PlayerScript.iscat)
                 {
                     Debug.Log("퓨슝");
                     Instantiate(bullet, rd.position, Quaternion.AngleAxis(angle-90, Vector3.forward));

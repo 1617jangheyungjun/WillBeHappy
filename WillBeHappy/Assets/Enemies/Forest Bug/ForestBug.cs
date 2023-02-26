@@ -104,7 +104,6 @@ public class ForestBug : Unit
     void deadevent()
     {
         dead = false;
-        int first = 180;
         for(int rocate = -90; rocate < 181; rocate += 180 / 8)
         {
             Debug.Log("숲벌레 죽음");
