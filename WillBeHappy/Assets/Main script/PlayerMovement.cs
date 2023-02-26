@@ -14,8 +14,10 @@ public class PlayerMovement : Unit
     
     [SerializeField] [Range(1, 100)] float Shiver = 10f;
 
-    public bool Shake;
+    [SerializeField] float grow_gravity = 1.2f;
+    float initialgravityscale; 
 
+    public bool iscat = true;
 
     Vector2 moveInput;
     Rigidbody2D myrigidbody;
@@ -30,6 +32,7 @@ public class PlayerMovement : Unit
         myrigidbody = GetComponent<Rigidbody2D>();
         myboxcollider = GetComponent<BoxCollider2D>();
         SR = GetComponent<SpriteRenderer>();
+        initialgravityscale = myrigidbody.gravityScale;
     }
 
     // Update is called once per frame
@@ -99,7 +102,6 @@ public class PlayerMovement : Unit
             currentHealth -= enemyAttack;
             myrigidbody.velocity = new Vector2(Mathf.Sign(other.transform.position.x - myrigidbody.position.x) * 20, 5f);
             SR.color = Color.red;
-            Shake = true;
         }
         if(other.gameObject.tag == "Enemy Bullet" & !isDamage)
         {
@@ -127,7 +129,23 @@ public class PlayerMovement : Unit
         {
             transform.localEulerAngles = new Vector3(0, 0, 0);
             SR.color = Color.white;
-            Shake = false;
+        }
+    }
+
+    void OnChange(InputValue value)
+    {
+        if(value.isPressed)
+        {
+            if(iscat)
+            {
+                iscat = false;
+                myrigidbody.gravityScale *= grow_gravity;
+            }
+            else
+            {
+                iscat = true;
+                myrigidbody.gravityScale = initialgravityscale;
+            }
         }
     }
 }

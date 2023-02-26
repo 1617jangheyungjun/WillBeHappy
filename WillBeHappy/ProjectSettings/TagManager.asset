@@ -19,6 +19,7 @@ TagManager:
   - UpNest
   - Forest Bug Nest
   - Froest Bug Radius Of Action
+  - Player Bullet
   layers:
   - Default
   - TransparentFX
@@ -33,7 +34,7 @@ TagManager:
   - Item
   - Box
   - Bullet
-  - 
+  - Player Bullet
   - 
   - 
   - 

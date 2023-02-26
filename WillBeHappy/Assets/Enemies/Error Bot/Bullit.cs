@@ -39,6 +39,10 @@ public class Bullit : Unit
     
     void OnCollisionEnter2D(Collision2D other) 
     {
-        Destroy(this.gameObject,0);   
+        if(other.gameObject.tag != "Player Bullet")
+        {
+            Destroy(this.gameObject); 
+        }
+        
     }
 }
